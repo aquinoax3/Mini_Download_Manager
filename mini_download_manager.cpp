@@ -10,10 +10,14 @@ int count = 0;
 void downloadFile(std::string fileName) {
 
     int delay = rand() % 1000 + 500; // 500ms to 1500ms
+    std::string progressBar = "";
     
     for (int i = 0; i <= 100; i += 10) {
         // std::lock_guard<std::mutex> lock(coutMutex);
-        std::cout << "✨ " << "[" << fileName <<  "] " << i << "%" << std::endl;
+        // TODO: Add Progress Bar filling up
+        progressBar = "----------";
+        progressBar += "#";
+        std::cout << "✨ " << "[" << fileName <<  "] " << "[" << progressBar << "]" << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     }
 
@@ -30,6 +34,8 @@ int main() {
     file1.join();
     file2.join();
     file3.join();
+
+    std::cout << "🏁 All files have completed download 🏁" << std::endl;
     
     return 0;
 }
