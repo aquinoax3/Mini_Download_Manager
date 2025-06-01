@@ -20,14 +20,20 @@ void downloadFile(std::string fileName) {
     int delay = rand() % 1000 + 500; // 500ms to 1500ms
     std::string progressBar = "----------";
     int left = 0;
+    int failChance = rand() % 50;
 
     auto start = std::chrono::high_resolution_clock::now();
     
-
+    std::cout << "Failed number " << failChance << std::endl;
     for (int i = 0; i <= 100; i += 10) {
         // std::lock_guard<std::mutex> lock(coutMutex);
         // TODO: Add Progress Bar filling up
         // std::cout << "start: " << startTime  << std::endl;
+
+        if (failChance < 20) {
+            std::cout <<  "❌ Download failed for: " << fileName << "❌" << std::endl;
+            break;
+        }
         
         if (left < 10) {
             std::cout << "✨ " << "[" << fileName <<  "] " << "[" << progressBar << "] " << i << "%" << std::endl;
