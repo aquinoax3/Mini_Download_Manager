@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <string>
 
 
 
@@ -31,8 +32,18 @@ void downloadFile(std::string fileName) {
         // std::cout << "start: " << startTime  << std::endl;
 
         if (failChance < 20) {
-            std::cout <<  "❌ Download failed for: " << fileName << "❌" << std::endl;
-            break;
+            std::cout <<  "❌ Download failed for: " << fileName << " ❌" << std::endl;
+            std::cout << "Retry Download for " << fileName << " ?" << " y/n" << std::endl;
+            char userResponse;
+            std::cin >> userResponse;
+
+            if (userResponse == 'y') {
+                std::cout << fileName << " will retry download" << std::endl;
+                failChance = rand() % 50;
+                downloadFile(fileName);
+            } else {
+                break;
+            }
         }
         
         if (left < 10) {
@@ -53,6 +64,7 @@ void downloadFile(std::string fileName) {
 
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 
+    // TODO: Display this message ONLY when a file successfulyy downloads
     std::cout << "⏰ Time taken for " << fileName << ": " << duration.count() << " seconds" << std::endl;
 
 }
