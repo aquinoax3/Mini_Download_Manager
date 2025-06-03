@@ -19,7 +19,6 @@ void downloadFile(std::string fileName) {
     std::string progressBar = "----------";
     int left = 0;
     int failChance = rand() % 50;
-    bool retry = false;
     auto start = std::chrono::high_resolution_clock::now();
 
     for (int i = 0; i <= 100; i += 10) {
@@ -62,7 +61,5 @@ void downloadFile(std::string fileName) {
 
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 
-    // TODO: Display this message ONLY when a file successfulyy downloads
     std::cout << "⏰ Time taken for " << fileName << ": " << duration.count() << " seconds" << std::endl;
-
 }
