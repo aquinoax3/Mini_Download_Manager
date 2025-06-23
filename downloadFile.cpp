@@ -7,11 +7,15 @@
 #include <ctime>
 #include <vector>
 #include <string>
-
+#include <atomic>
 
 
 std::mutex coutMutex;
 int count = 0;
+std::atomic<int> completedDownloads(0);
+std::atomic<int> unCompletedDownloads(0);
+
+
 
 void downloadFile(std::string fileName) {
 
@@ -37,6 +41,7 @@ void downloadFile(std::string fileName) {
                     failChance = rand() % 50;
                     break;
                 } else if (userResponse == 'n') {
+                    unCompletedDownloads++;
                     std::cout << "Download for " << fileName << " has been terminated" << "\n";
                     return;
                 } else {
@@ -48,7 +53,7 @@ void downloadFile(std::string fileName) {
         if (left < 10) {
             std::cout << "✨ " << "[" << fileName <<  "] " << "[" << progressBar << "] " << i << "%" << std::endl;
         } else {
-            std::cout << "✨ " << "[" << fileName <<  "] " << "[" << progressBar << "] " << i << "% " << "🎊 COMPLETED 🎊" << std::endl;
+            std::cout << "✅ " << "[" << fileName <<  "] " << "[" << progressBar << "] " << i << "% " << "🎊 COMPLETED 🎊" << std::endl;
         }
         
         progressBar[left] = '#' ;
@@ -56,10 +61,16 @@ void downloadFile(std::string fileName) {
         
         std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     }
+
+    completedDownloads++;
     
     auto end = std::chrono::high_resolution_clock::now();
 
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 
     std::cout << "⏰ Time taken for " << fileName << ": " << duration.count() << " seconds" << std::endl;
+    std::cout << "Total Completed Downloads: " << completedDownloads << std::endl;
+    std::cout << "Terminated Downloads: " << unCompletedDownloads <<  std::endl;
 }
+
+
