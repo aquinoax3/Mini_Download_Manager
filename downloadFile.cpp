@@ -69,8 +69,6 @@ void downloadFile(std::string fileName) {
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
 
     std::cout << "⏰ Time taken for " << fileName << ": " << duration.count() << " seconds" << std::endl;
-    std::cout << "Total Completed Downloads: " << completedDownloads << std::endl;
-    std::cout << "Terminated Downloads: " << unCompletedDownloads <<  std::endl;
 }
 
 

@@ -12,6 +12,9 @@ int main() {
     file1.join();
     file2.join();
     file3.join();
+    
+    std::cout << "Total Completed Downloads: " << completedDownloads << std::endl;
+    std::cout << "Terminated Downloads: " << unCompletedDownloads <<  std::endl;
 
     std::cout << "🏁 All files have completed download 🏁" << std::endl;
     
